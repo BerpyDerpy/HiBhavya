@@ -447,15 +447,16 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
 }
 .hall h2{margin:0 0 4px;font-size:18px;text-align:center}
 .hall .sub{margin:0;text-align:center;font-size:13px}
-.panel{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end;column-gap:4px;margin-top:18px;position:relative}
+.panel{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:end;column-gap:4px;margin-top:18px;position:relative}
 .seat{text-align:center;position:relative}
 .pigeon{position:relative;width:72px;height:96px;left:50%;margin-left:-36px;transform-origin:bottom center}
-.seat:nth-child(even) .pigeon{transform:scaleX(-1)}
-.pg-tail{position:absolute;left:2px;bottom:22px;width:24px;height:12px;background:#6F7784;border-radius:2px 0 0 8px;transform:rotate(-16deg)}
-.pg-body{position:absolute;left:10px;bottom:12px;width:56px;height:38px;background:#9AA1AD;border-radius:60% 45% 50% 50% / 62% 52% 48% 40%}
+.pigeon{transform:scaleX(var(--fx,1))}
+.seat.left .pigeon{--fx:-1}
+.pg-tail{position:absolute;left:2px;bottom:22px;width:24px;height:12px;background:var(--pt,#6F7784);border-radius:2px 0 0 8px;transform:rotate(-16deg)}
+.pg-body{position:absolute;left:10px;bottom:12px;width:56px;height:38px;background:var(--pb,#9AA1AD);border-radius:60% 45% 50% 50% / 62% 52% 48% 40%}
 .pg-wing{
   position:absolute;left:18px;bottom:17px;width:38px;height:22px;border-radius:10% 80% 40% 60%;
-  background:linear-gradient(100deg,transparent 0 40%,#4d535c 40% 46%,transparent 46% 58%,#4d535c 58% 64%,transparent 64%),#838B98;
+  background:linear-gradient(100deg,transparent 0 40%,#4d535c 40% 46%,transparent 46% 58%,#4d535c 58% 64%,transparent 64%),var(--pw,#838B98);
 }
 .pg-headgrp{position:absolute;left:42px;bottom:36px;width:30px;height:40px;animation:bob 1.3s ease-in-out infinite}
 .seat:nth-child(2) .pg-headgrp{animation-delay:-.4s}
@@ -464,7 +465,7 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
 .seat:nth-child(5) .pg-headgrp{animation-delay:-1s}
 @keyframes bob{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
 .pg-neck{position:absolute;left:2px;bottom:0;width:20px;height:24px;border-radius:40%;background:linear-gradient(140deg,#6FA88A,#8A6AA8)}
-.pg-head{position:absolute;left:4px;bottom:16px;width:22px;height:20px;border-radius:50%;background:#8D95A2}
+.pg-head{position:absolute;left:4px;bottom:16px;width:22px;height:20px;border-radius:50%;background:var(--ph,#8D95A2)}
 .pg-eye{position:absolute;right:4px;top:6px;width:6px;height:6px;border-radius:50%;background:#111;box-shadow:0 0 0 1.6px #E8862A}
 .pg-beak{position:absolute;right:-8px;top:10px;width:10px;height:4px;background:#3c3c3c;border-radius:0 3px 3px 0}
 .pg-beak::before{content:"";position:absolute;left:0;top:-2px;width:4px;height:3px;background:#e9e9e9;border-radius:50%}
@@ -478,12 +479,9 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
   font-family:var(--stamp);font-weight:900;font-size:15px;color:var(--violet);line-height:1;
 }
 .paddle i{display:block;width:3px;height:22px;margin:0 auto;background:#7a4a28}
-.seat:nth-child(even) .paddle span{transform:scaleX(-1)}
+.seat.left .paddle span{transform:scaleX(-1)}
 .voted .paddle{transform:none;opacity:1}
 .paddle.abs span{color:#666;font-size:11px}
-.seat.turned .pigeon{transform:scaleX(-1)}
-.seat.turned .paddle span{transform:scaleX(-1)}
-.seat.turned.even .pigeon{transform:scaleX(1)}
 .table{height:22px;background:linear-gradient(var(--wood-top),var(--wood));border-radius:3px;margin:0 -14px;position:relative;z-index:1}
 .tent{
   display:block;position:relative;z-index:2;margin:-30px auto 8px;width:92%;max-width:92px;background:#fff;border:1px solid #bbb;
@@ -615,10 +613,7 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
   .almirah{right:6px}
   .files{right:12px}
   .form,.file,.chit{padding-left:16px;padding-right:16px}
-  .pigeon{transform:scale(.8)}
-  .seat:nth-child(even) .pigeon{transform:scale(.8) scaleX(-1)}
-  .seat.turned .pigeon{transform:scale(.8) scaleX(-1)}
-  .seat.turned.even .pigeon{transform:scale(.8)}
+  .pigeon{transform:scale(.72) scaleX(var(--fx,1))}
   .tent{font-size:10px}
   .feed{width:94%;padding:22px 30px 18px;font-size:19px}
   .feed::before,.feed::after{width:20px;background-size:20px 24px;background-image:radial-gradient(circle at 10px 12px,var(--wall) 0 4px,#fff 4.5px)}
@@ -742,6 +737,99 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
   .desk{margin-top:12px}
 }
 
+/* meeting stage */
+.stage{position:relative;padding-top:112px}
+.stage .panel{margin-top:0}
+.hop{position:relative}
+.seat.speaking .hop{animation:hop .45s ease-in-out 2}
+@keyframes hop{50%{transform:translateY(-9px)}}
+.seat.fight .hop{animation:scuffle .16s linear infinite}
+@keyframes scuffle{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(-4px,-3px) rotate(-7deg)}50%{transform:translate(3px,0) rotate(5deg)}75%{transform:translate(-2px,-4px) rotate(-4deg)}100%{transform:translate(0,0) rotate(0)}}
+.seat.grumble .hop{animation:grumble .5s linear infinite}
+@keyframes grumble{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.seat.messy .hop{transform:rotate(-7deg) translateY(2px)}
+.seat.inbrawl .hop{opacity:0}
+.seat.sleepy .pg-headgrp{animation:none;transform:translate(-2px,6px) rotate(18deg)}
+.acc{position:absolute;display:block}
+.acc.glasses{right:0;top:3px;width:10px;height:10px;border:1.6px solid #1d1d1d;border-radius:50%;background:rgba(255,255,255,.25)}
+.acc.shades{right:-1px;top:4px;width:12px;height:7px;background:#111;border-radius:2px 2px 6px 6px}
+.acc.flower{left:3px;top:-5px;width:6px;height:6px;border-radius:50%;background:#F6D24A;box-shadow:4px 0 0 1px #FF8FB1,-4px 0 0 1px #FF8FB1,0 4px 0 1px #FF8FB1,0 -4px 0 1px #FF8FB1}
+.acc.tie{left:14px;bottom:-10px;width:8px;height:15px;background:#C0262F;clip-path:polygon(20% 0,80% 0,62% 22%,100% 82%,50% 100%,0 82%,38% 22%)}
+.acc.cap{left:0;top:-4px;width:20px;height:8px;background:#2F7D4F;border-radius:9px 9px 0 0;box-shadow:7px 4px 0 -2px #2F7D4F}
+
+.meet-bubble{
+  position:absolute;left:0;bottom:106px;z-index:6;width:max-content;max-width:min(240px,92%);
+  background:#fff;border:2px solid var(--ink);border-radius:12px;padding:5px 10px 7px;
+  font-size:13px;line-height:1.35;opacity:0;pointer-events:none;
+}
+.meet-bubble small{display:block;font-size:11px;font-weight:700;color:var(--violet);line-height:1.3}
+.meet-bubble.show{opacity:1}
+.meet-bubble.pop{animation:mbPop .25s cubic-bezier(.3,1.6,.5,1)}
+@keyframes mbPop{from{transform:scale(.85);opacity:0}}
+.meet-bubble::after{content:"";position:absolute;bottom:-11px;left:calc(var(--tail,50%) - 9px);border:9px solid transparent;border-top-color:var(--ink);border-bottom:0}
+.meet-bubble::before{content:"";position:absolute;bottom:-8px;left:calc(var(--tail,50%) - 7px);border:7px solid transparent;border-top-color:#fff;border-bottom:0;z-index:1}
+.meet-bubble.to-right::after{bottom:auto;top:50%;left:auto;right:-11px;margin-top:-9px;border:9px solid transparent;border-left-color:var(--ink);border-right:0}
+.meet-bubble.to-right::before{bottom:auto;top:50%;left:auto;right:-8px;margin-top:-7px;border:7px solid transparent;border-left-color:#fff;border-right:0}
+
+.ledge{position:absolute;right:0;top:84px;width:86px;height:7px;border-radius:2px;background:linear-gradient(var(--wood-top),var(--wood))}
+.uncle-wrap{position:absolute;right:6px;top:-10px;width:74px;height:96px;z-index:3;opacity:0;pointer-events:none}
+.uncle-wrap .pigeon{--fx:-1}
+.uncle-wrap.in{opacity:1;animation:landIn 1s cubic-bezier(.2,.8,.3,1.1) both}
+.uncle-wrap.out{animation:flyOut 1s ease-in both}
+@keyframes landIn{from{opacity:0;transform:translate(160px,-140px) rotate(-25deg)}60%{opacity:1}}
+@keyframes flyOut{from{opacity:1}to{opacity:0;transform:translate(-320px,-170px) rotate(-14deg)}}
+
+.fly-feather{position:absolute;z-index:5;width:8px;height:18px;border-radius:50% 50% 50% 50% / 80% 80% 20% 20%;background:#B9BEC6;pointer-events:none;animation:flyF 1.3s ease-out forwards}
+@keyframes flyF{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+
+.brawl{position:absolute;bottom:0;height:100px;z-index:4;display:none;pointer-events:none}
+.brawl.on{display:block}
+.brawl i{position:absolute;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,#d6d0c3 72%);animation:puff .3s ease-in-out infinite alternate}
+.brawl i:nth-child(1){left:0;bottom:4px;width:48%;height:66%}
+.brawl i:nth-child(2){left:24%;bottom:18px;width:52%;height:80%;animation-delay:-.1s}
+.brawl i:nth-child(3){right:0;bottom:2px;width:48%;height:70%;animation-delay:-.2s}
+.brawl i:nth-child(4){left:28%;bottom:0;width:44%;height:46%;animation-delay:-.15s}
+@keyframes puff{to{transform:scale(1.1) rotate(7deg)}}
+.brawl span{position:absolute;font-family:var(--stamp);font-weight:900;color:#C0262F;font-size:22px;animation:zap .4s steps(2,jump-none) infinite}
+.brawl span:nth-of-type(1){left:12%;top:18%}
+.brawl span:nth-of-type(2){left:46%;top:2%;color:#E7A21B;animation-delay:-.2s}
+.brawl span:nth-of-type(3){right:10%;top:26%;color:var(--violet);animation-delay:-.1s}
+.brawl b{position:absolute;left:30%;bottom:6px;width:6px;height:16px;border-left:3px solid #D9737A;border-right:3px solid #D9737A;animation:zap .3s steps(2,jump-none) infinite}
+@keyframes zap{0%{transform:scale(1) rotate(-8deg)}100%{transform:scale(1.25) rotate(10deg)}}
+
+.gavel{position:absolute;left:-16px;bottom:-14px;z-index:4;width:44px;height:28px;transform-origin:85% 85%;transform:rotate(-8deg)}
+.gavel i{position:absolute;left:0;top:0;width:24px;height:13px;border-radius:3px;background:linear-gradient(#a8693a,#6e3f1e)}
+.gavel b{position:absolute;left:11px;top:11px;width:30px;height:5px;border-radius:3px;background:#8a5a2b;transform:rotate(25deg);transform-origin:left}
+.gavel.bang{animation:bang .35s ease-in}
+@keyframes bang{40%{transform:rotate(-42deg) translateY(-8px)}70%{transform:rotate(0)}}
+.order{position:absolute;left:10px;bottom:34px;z-index:7;font-family:var(--stamp);font-weight:900;font-size:34px;color:#C0262F;text-transform:uppercase;opacity:0;pointer-events:none;filter:url(#ink)}
+.order.on{animation:orderPop 1.1s ease-out}
+@keyframes orderPop{0%{opacity:0;transform:rotate(-10deg) scale(1.7)}15%{opacity:1;transform:rotate(-10deg) scale(1)}75%{opacity:1;transform:rotate(-10deg)}100%{opacity:0;transform:rotate(-10deg)}}
+.hall.shake .table,.hall.shake .stage .panel{animation:tshake .3s}
+@keyframes tshake{25%{transform:translateY(3px)}50%{transform:translateY(-2px)}75%{transform:translateY(1px)}}
+
+.min-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.min-head h3{margin:0}
+.log{max-height:230px;overflow-y:auto;margin-top:8px;font-size:14px;line-height:1.45;padding-right:4px;scroll-behavior:smooth}
+.log p{margin:0 0 6px;animation:logIn .3s ease-out}
+.log .act{font-style:italic;color:#6b6358}
+.log .vote b{color:var(--violet)}
+.log:empty::before{content:"Waiting for the meeting to start.";color:#888;font-style:italic}
+@keyframes logIn{from{opacity:0;transform:translateX(-6px)}}
+@media (max-width:560px){
+  .stage{padding-top:94px}
+  .meet-bubble{bottom:80px;font-size:12.5px;max-width:min(220px,94%)}
+  .ledge{top:70px;width:66px}
+  .uncle-wrap{top:-24px;right:0}
+  .brawl{height:76px}
+  .gavel{transform:rotate(-8deg) scale(.8)}
+  .order{bottom:24px;font-size:28px}
+  .countdown{margin-top:6px}
+  .countdown b{font-size:26px}
+  .log{max-height:150px;font-size:13px}
+  .tent{font-size:9px;padding:2px 1px}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   .dim{display:none}
@@ -765,12 +853,11 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <div class="circular">
     <p class="circ-no">Circular no. 1/2026</p>
-    <h2 id="gateTitle">Please switch on sound</h2>
-    <p><span class="speaker" aria-hidden="true"></span>This office makes noises. Printer noise, pigeon noise, and one song at the end.</p>
-    <p>Please turn up your phone volume also.</p>
+    <h2 id="gateTitle">switch on sound</h2>
+    <p><span class="speaker" aria-hidden="true"></span> or gay.</p>
+    <p>turn up your phone volume too :)</p>
     <div class="row">
       <button class="btn" id="gateOn" type="button">Switch on sound</button>
-      <button class="btn ghost" id="gateOff" type="button">Continue without sound</button>
     </div>
     <p class="sign-off">by order, Window 3</p>
   </div>
@@ -997,34 +1084,27 @@ textarea.line-in{background-attachment:local !important;font-size:24px;resize:ve
       <section class="scene" data-scene="committee" hidden>
         <div class="hall">
           <h2>Pigeon committee meeting</h2>
-          <p class="sub">Quorum: 5 pigeons. Snacks: none.</p>
-          <p class="countdown" id="countdown" aria-live="polite">Voting starts in <b id="cdNum">10</b> seconds</p>
-          <div class="panel" id="panel">
-            <div class="seat"><div class="pigeon"><div class="paddle"><span>Yes</span><i></i></div><div class="pg-tail"></div><div class="pg-body"></div><div class="pg-wing"></div><div class="pg-headgrp"><div class="pg-neck"></div><div class="pg-head"><div class="pg-eye"></div><div class="pg-beak"></div></div></div><div class="pg-legs"></div></div></div>
-            <div class="seat even"><div class="pigeon"><div class="paddle"><span>Yes</span><i></i></div><div class="pg-tail"></div><div class="pg-body"></div><div class="pg-wing"></div><div class="pg-headgrp"><div class="pg-neck"></div><div class="pg-head"><div class="pg-eye"></div><div class="pg-beak"></div></div></div><div class="pg-legs"></div></div></div>
-            <div class="seat"><div class="pigeon"><div class="paddle"><span>Yes</span><i></i></div><div class="pg-tail"></div><div class="pg-body"></div><div class="pg-wing"></div><div class="pg-headgrp"><div class="pg-neck"></div><div class="pg-head"><div class="pg-eye"></div><div class="pg-beak"></div></div></div><div class="pg-legs"></div></div></div>
-            <div class="seat even"><div class="pigeon"><div class="paddle"><span>Yes</span><i></i></div><div class="pg-tail"></div><div class="pg-body"></div><div class="pg-wing"></div><div class="pg-headgrp"><div class="pg-neck"></div><div class="pg-head"><div class="pg-eye"></div><div class="pg-beak"></div></div></div><div class="pg-legs"></div></div></div>
-            <div class="seat"><div class="pigeon"><div class="paddle abs"><span>Abstain</span><i></i></div><div class="pg-tail"></div><div class="pg-body"></div><div class="pg-wing"></div><div class="pg-headgrp"><div class="pg-neck"></div><div class="pg-head"><div class="pg-eye"></div><div class="pg-beak"></div></div></div><div class="pg-legs"></div></div></div>
+          <p class="sub">Quorum: 6 pigeons. Snacks: none.</p>
+          <p class="countdown" id="countdown" aria-live="polite">Meeting starts in <b id="cdNum">10</b> seconds</p>
+          <div class="stage" id="stage">
+            <div class="ledge" aria-hidden="true"></div>
+            <div class="uncle-wrap" id="uncle" aria-hidden="true"></div>
+            <div class="meet-bubble" id="meetBubble" aria-hidden="true"><small id="meetName"></small><span id="meetText"></span></div>
+            <div class="panel" id="panel"></div>
+            <div class="brawl" id="brawl" aria-hidden="true"><i></i><i></i><i></i><i></i><span>#@!</span><span>&#9733;</span><span>$%!</span><b></b></div>
+            <div class="gavel" id="gavel" aria-hidden="true"><i></i><b></b></div>
+            <div class="order" id="order" aria-hidden="true">Order!</div>
           </div>
           <div class="table" aria-hidden="true"></div>
-          <div class="panel" style="margin-top:0" aria-hidden="true">
-            <span class="tent">Gutur (Chair)</span>
-            <span class="tent">Mrs. Feathers</span>
-            <span class="tent">dinosaur</span>
-            <span class="tent">bread</span>
-            <span class="tent">Pigeon no. 5</span>
-          </div>
+          <div class="panel" id="tents" style="margin-top:0" aria-hidden="true"></div>
         </div>
         <div class="minutes">
-          <h3>Minutes of meeting</h3>
-          <ol id="mins">
-            <li>Gutur (Chairman): Yes. She is old, but she is our old.</li>
-            <li>Mrs. Feathers: Yes. Akka once shared her chips with me. Two chips.</li>
-            <li>dinosaur: Yes. dinosaur did not read the file. Voted anyway.</li>
-            <li>bread: Yes. She dropped half a samosa in 2023. bread never forgot.</li>
-            <li>Pigeon no. 5: Abstains. Saw one classic Bhavya moment last week. Still processing it.</li>
-          </ol>
-          <p class="result" id="result">Result: 4 yes, 0 no, 1 pigeon being dramatic. Birthday is approved.</p>
+          <div class="min-head">
+            <h3>Minutes of meeting</h3>
+            <button class="linkish" id="skipMeet" type="button">Skip meeting</button>
+          </div>
+          <div class="log" id="log" aria-live="polite"></div>
+          <p class="result" id="result"></p>
           <div class="row">
             <button class="btn" id="toPrint" type="button" hidden>Print the wish</button>
           </div>
@@ -1480,47 +1560,294 @@ approveBtn.addEventListener("click", () => {
   }, reduce ? 0 : 1500);
 });
 $("#toCommittee").addEventListener("click", () => {
-  say("Committee is sitting down. Voting starts in 10 seconds. Please don't disturb the pigeons.");
+  say("Committee is sitting down. Meeting starts in 10 seconds. Please don't disturb the pigeons.");
   show("committee");
   later(() => focusTop($(".hall")), 50);
   startCountdown();
 });
 
 /* 5. committee */
-let cdTimer = null;
+const BIRDS = [
+  {name:"Gutur (Chair)", tag:"Gutur", vote:"Yes", pitch:330, tie:true},
+  {name:"Mrs. Feathers", tag:"Mrs. Feathers", vote:"Yes", pitch:520, acc:"flower"},
+  {name:"dinosaur", tag:"dinosaur", vote:"Yes", pitch:240, c:["#7C828E","#686E79","#737985","#5A606B"]},
+  {name:"bread", tag:"bread", vote:"Yes", pitch:440, c:["#D7DADF","#BFC3CA","#CFD2D8","#A9AEB6"]},
+  {name:"Ramesh (CA)", tag:"Ramesh, CA", vote:"Yes", pitch:390, acc:"glasses"},
+  {name:"Pigeon no. 5", tag:"Pigeon no. 5", vote:"Abstain", pitch:290, acc:"shades"}
+];
+const UNCLE = {name:"Uncle Kabootar (visiting)", pitch:300, acc:"cap", c:["#A3907E","#8C7866","#9A8774","#76634F"]};
+const G = 0, F = 1, D = 2, BR = 3, R = 4, P5 = 5, U = "U";
+
+function pigeonHTML(b){
+  const v = b.c ? "--pb:" + b.c[0] + ";--pw:" + b.c[1] + ";--ph:" + b.c[2] + ";--pt:" + b.c[3] : "";
+  return '<div class="hop"><div class="pigeon" style="' + v + '">' +
+    (b.vote ? '<div class="paddle' + (b.vote === "Abstain" ? " abs" : "") + '"><span>' + b.vote + '</span><i></i></div>' : '') +
+    '<div class="pg-tail"></div><div class="pg-body"></div><div class="pg-wing"></div>' +
+    '<div class="pg-headgrp"><div class="pg-neck"></div>' + (b.tie ? '<i class="acc tie"></i>' : '') +
+    '<div class="pg-head"><div class="pg-eye"></div><div class="pg-beak"></div>' + (b.acc ? '<i class="acc ' + b.acc + '"></i>' : '') + '</div></div>' +
+    '<div class="pg-legs"></div></div></div>';
+}
+const FACE = [false, true, false, true, false, true]; /* true = facing left */
+function buildMeeting(){
+  $("#panel").innerHTML = BIRDS.map((b,i) => '<div class="seat' + (FACE[i] ? " left" : "") + '">' + pigeonHTML(b) + '</div>').join("");
+  $("#tents").innerHTML = BIRDS.map(b => '<span class="tent">' + b.tag + '</span>').join("");
+  $("#uncle").className = "uncle-wrap";
+  $("#uncle").innerHTML = pigeonHTML(UNCLE);
+  document.querySelectorAll("#panel .pigeon").forEach(pg => pg.addEventListener("click", () => {
+    coo();
+    classic("pigeon", "Tried to pet a pigeon during an official meeting.");
+  }));
+  $("#log").innerHTML = "";
+  $("#result").textContent = ""; $("#result").classList.remove("on");
+  $("#meetBubble").className = "meet-bubble";
+  $("#brawl").className = "brawl";
+  $("#skipMeet").hidden = false;
+}
+buildMeeting();
+
+const seatEl = i => document.querySelectorAll("#panel .seat")[i];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rnd = (a, b) => a + Math.random() * (b - a);
+const pick = v => Array.isArray(v) ? v[Math.floor(Math.random() * v.length)] : v;
+const readTime = t => 500 + t.length * 21 + rnd(0, 500);
+let meetRun = 0, cdTimer = null, chatTimers = [];
+
+function chirp(p){ tone(p, .14, "sine", .06, 0, p * .8); tone(p * .96, .2, "sine", .05, .16, p * .72); }
+function bubble(who, text){
+  const st = $("#stage"), b = $("#meetBubble");
+  const sr = st.getBoundingClientRect();
+  $("#meetName").textContent = who === U ? UNCLE.name : BIRDS[who].name;
+  $("#meetText").textContent = text;
+  b.classList.remove("pop", "to-right"); void b.offsetWidth;
+  b.classList.add("show", "pop");
+  const bw = b.offsetWidth, sw = st.clientWidth;
+  if(who === U){
+    const ur = $("#uncle").getBoundingClientRect();
+    b.classList.add("to-right");
+    b.style.left = Math.max(2, ur.left - sr.left - bw - 6) + "px";
+    return;
+  }
+  const r = seatEl(who).getBoundingClientRect();
+  const x = r.left + r.width / 2 - sr.left;
+  const left = Math.min(Math.max(x - bw / 2, 2), sw - bw - 2);
+  b.style.left = left + "px";
+  b.style.setProperty("--tail", Math.min(Math.max(x - left, 14), bw - 14) + "px");
+}
+function logLine(html, cls){
+  const p = document.createElement("p");
+  if(cls) p.className = cls;
+  p.innerHTML = html;
+  const lg = $("#log"); lg.appendChild(p); lg.scrollTop = lg.scrollHeight;
+}
+const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function check(run){ if(run !== meetRun) throw "stop"; }
+
+async function speak(who, text, run, opts = {}){
+  check(run);
+  const seat = who === U ? null : seatEl(who);
+  if(seat){ seat.classList.remove("speaking"); void seat.offsetWidth; seat.classList.add("speaking"); }
+  bubble(who, text);
+  chirp(who === U ? UNCLE.pitch : BIRDS[who].pitch);
+  if(!opts.nolog) logLine("<b>" + esc(who === U ? UNCLE.name : BIRDS[who].name) + ":</b> " + esc(text), opts.cls);
+  await sleep(opts.ms || readTime(text));
+  if(seat) seat.classList.remove("speaking");
+  check(run);
+}
+function feathers(i, n = 6){
+  const st = $("#stage"), sr = st.getBoundingClientRect(), r = seatEl(i).getBoundingClientRect();
+  for(let k = 0; k < n; k++){
+    const f = document.createElement("i");
+    f.className = "fly-feather";
+    f.style.left = (r.left - sr.left + r.width / 2 + rnd(-10, 10)) + "px";
+    f.style.top = (r.top - sr.top + r.height * .55) + "px";
+    f.style.setProperty("--dx", rnd(-70, 70) + "px");
+    f.style.setProperty("--dy", rnd(-80, 30) + "px");
+    f.style.setProperty("--r", rnd(-300, 300) + "deg");
+    st.appendChild(f);
+    setTimeout(() => f.remove(), 1400);
+  }
+  noise(.08, .05, 1800);
+}
+function face(i, left){ seatEl(i).classList.toggle("left", left); }
+function gavel(){
+  const g = $("#gavel"), o = $("#order"), h = $(".hall");
+  [g, o, h].forEach(e => e.classList.remove("bang", "on", "shake")); void g.offsetWidth;
+  g.classList.add("bang"); o.classList.add("on"); h.classList.add("shake");
+  thud();
+}
+function startFight(a, b){
+  face(a, seatEl(a).getBoundingClientRect().left > seatEl(b).getBoundingClientRect().left);
+  face(b, seatEl(b).getBoundingClientRect().left > seatEl(a).getBoundingClientRect().left);
+  [a, b].forEach(i => seatEl(i).classList.add("fight"));
+  feathers(a, 4); feathers(b, 4);
+}
+function stopFights(){
+  document.querySelectorAll("#panel .seat").forEach(s => s.classList.remove("fight", "inbrawl", "grumble"));
+  $("#brawl").classList.remove("on");
+}
+function startBrawl(ids){
+  const st = $("#stage").getBoundingClientRect();
+  const rs = ids.map(i => seatEl(i).getBoundingClientRect());
+  const left = Math.min(...rs.map(r => r.left)) - st.left - 6;
+  const right = Math.max(...rs.map(r => r.right)) - st.left + 6;
+  const br = $("#brawl");
+  br.style.left = left + "px"; br.style.width = (right - left) + "px";
+  ids.forEach(i => seatEl(i).classList.add("inbrawl"));
+  br.classList.add("on");
+  ids.forEach(i => feathers(i, 5));
+}
+
+/* the script. arrays = random pick each time */
+const CHATTER = [
+  [BR, "Is there bread at this meeting?"],
+  [D, "Who is sitting in my seat. Oh. It is me. Ok."],
+  [R, "I have already added this meeting to expenses."],
+  [F, "Did anyone get the email? I did not get the email."],
+  [P5, "I am Pigeon no. 5 but I sit in seat 6. Nobody asked me."],
+  [G, "Two minutes please. Everybody sit."],
+  [D, "In my time, meetings were on stone tablets."],
+  [BR, "Bread?"],
+  [F, "Who invited the crow? Oh. It is a shadow. Sorry shadow."]
+];
+const EXTRAS = [
+  [D, "zzz... samosa... zzz", "sleep"],
+  [BR, "Will there be bread after the meeting? Asking for me."],
+  [R, "Point of order. Is this meeting tax deductible?"],
+  [F, "Can we also discuss why Akka is called Dadi Amma? I have theories."],
+  [G, "Please talk one at a time. Also please talk less."],
+  [P5, "..."],
+  [D, "In my time we fought with stones. Kids these days."]
+];
+function buildScript(){
+  const sc = [
+    {w:G, t:"Meeting is started. Agenda item 1: is Akka good?", fx:"gavel"},
+    {w:F, t:["Yes. Next agenda.", "Yes. Can we go home now?", "Obviously yes. Next."]},
+    {w:G, t:"We need reasons. This is a government office.", slot:true},
+    {w:F, t:"She once shared her chips with me. Two chips. I still think about it."},
+    {w:BR, t:"Chips? Small thing. She dropped half a samosa in 2023. HALF."},
+    {w:R, t:"As per my calculation, half samosa is 0.5 samosa. Not that impressive."},
+    {w:BR, t:["Ramesh. Come outside.", "Say that again Ramesh. Say it to my beak."], fx:"fight"},
+    {act:"(bread and Ramesh are fighting. Feathers are flying.)", ms:1100},
+    {w:G, t:"Order! Order!", fx:"gavel", stop:true, slot:true},
+    {w:D, t:"I have known Akka since dinosaur times. She was good then too."},
+    {w:F, t:"You ARE the dinosaur, dinosaur."},
+    {w:D, t:["Exactly. So I would know.", "Yes. That is why I know."], slot:true},
+    {w:R, t:"Real reason is simple. She replies to messages. In 3 to 5 working days, but she replies."},
+    {w:F, t:"No. Real reason is her classic Bhavya moments. Free entertainment for all of us."},
+    {w:BR, t:"NO. REAL REASON IS SAMOSA.", fx:"brawl"},
+    {act:"(Mrs. Feathers, bread and Ramesh are now fighting. Nobody knows who is winning.)", ms:1100},
+    {w:P5, t:["...", "*eats popcorn*", "This is better than TV."]},
+    {w:G, t:"ORDER!!!", fx:"gavel", stop:true, mess:true},
+    {act:"(Fight is over. Ramesh lost 3 feathers. He has added them to expenses.)", ms:1500, slot:true},
+    {fx:"land"},
+    {w:U, t:"Hello hello. Uncle here, visiting from Hyderabad. I don't know her, but Akka is good. Ok bye."},
+    {fx:"leave"},
+    {w:G, t:"Who was that."},
+    {w:D, t:["Not a member. Very rude. I like him.", "No idea. Nice cap though."], slot:true},
+    {w:P5, t:"Can we vote now. I have a personal matter."},
+    {w:G, t:"Ok. We vote now. Paddles up."}
+  ];
+  /* drop 2 random extra lines into random allowed slots */
+  const slots = sc.map((st, i) => st.slot ? i : -1).filter(i => i >= 0).sort(() => Math.random() - .5).slice(0, 1);
+  const extras = EXTRAS.slice().sort(() => Math.random() - .5);
+  slots.forEach((at, k) => { const e = extras[k]; sc.splice(at + 1, 0, {w:e[0], t:e[1], sleep:e[2] === "sleep"}); });
+  return sc;
+}
+const VOTE_LINES = [
+  ["Chair says yes. Chair is also tired."],
+  ["Yes. Because chips.", "Yes. For the two chips."],
+  ["Yes. What are we voting for? Anyway, yes.", "Yes. I forgot the question but yes."],
+  ["Yes. Because samosa. Ramesh is still wrong."],
+  ["Yes. 100% yes. Maybe 104%. I will check.", "Yes. Approved, subject to audit."],
+  ["Abstain. Personal reasons."]
+];
+
 function startCountdown(){
-  clearInterval(cdTimer);
+  const run = ++meetRun;
+  clearInterval(cdTimer); chatTimers.forEach(clearTimeout); chatTimers = [];
   let n = 10;
-  $("#countdown").innerHTML = 'Voting starts in <b id="cdNum">10</b> seconds';
+  $("#countdown").innerHTML = 'Meeting starts in <b id="cdNum">10</b> seconds';
+  const chat = CHATTER.slice().sort(() => Math.random() - .5).slice(0, 3);
+  [rnd(900, 1800), rnd(3900, 5000), rnd(6900, 8000)].forEach((t, k) => {
+    chatTimers.push(setTimeout(() => { if(run === meetRun) speak(chat[k][0], chat[k][1], run, {nolog:true, ms:1700}).catch(() => {}); }, t));
+  });
   cdTimer = setInterval(() => {
     n--;
     if(n > 0){ $("#cdNum").textContent = n; blip(); return; }
     clearInterval(cdTimer); cdTimer = null;
-    $("#countdown").textContent = "Voting now. Silence please.";
-    runVote();
+    $("#countdown").textContent = "Meeting is going on. Silence please.";
+    runMeeting(run).catch(() => {});
   }, 1000);
 }
-document.querySelectorAll("#panel .pigeon").forEach(pg => pg.addEventListener("click", () => {
-  coo();
-  classic("pigeon", "Tried to pet a pigeon during an official meeting.");
-}));
-function runVote(){
-  const seats = [...document.querySelectorAll("#panel .seat")];
-  const mins = [...document.querySelectorAll("#mins li")];
-  const gap = reduce ? 50 : 1100;
-  seats.forEach((s,i) => setTimeout(() => {
-    s.classList.add("voted"); mins[i].classList.add("on"); coo();
-    if(i === 0) reveal($("#panel"));
-    else reveal(mins[i]);
-    if(i === 4) setTimeout(() => s.classList.add("turned"), reduce ? 0 : 500);
-  }, gap*(i+1)));
-  setTimeout(() => {
-    $("#result").classList.add("on");
-    say("Motion passed. Committee has gone for bread. I will print your wish now.");
-    $("#toPrint").hidden = false;
-    reveal($("#toPrint"));
-  }, gap*6 + 300);
+
+async function runMeeting(run){
+  for(const st of buildScript()){
+    check(run);
+    if(st.act){ logLine(esc(st.act), "act"); await sleep(st.ms || 1400); continue; }
+    if(st.fx === "land"){ $("#uncle").classList.add("in"); chirp(UNCLE.pitch); logLine("(A pigeon nobody knows lands on the window.)", "act"); await sleep(1400); continue; }
+    if(st.fx === "leave"){ const u = $("#uncle"); u.classList.remove("in"); u.classList.add("out"); $("#meetBubble").classList.remove("show"); logLine("(He leaves.)", "act"); await sleep(1300); continue; }
+    if(st.fx === "gavel") gavel();
+    if(st.stop){ stopFights(); }
+    if(st.mess){ [F, BR, R].forEach(i => seatEl(i).classList.add("messy")); }
+    if(st.sleep) seatEl(st.w).classList.add("sleepy");
+    const text = pick(st.t);
+    if(st.fx === "fight"){
+      const p = speak(st.w, text, run); p.catch(() => {});
+      await sleep(500); check(run); startFight(BR, R); await p; continue;
+    }
+    if(st.fx === "brawl"){
+      const p = speak(st.w, text, run); p.catch(() => {});
+      await sleep(450); check(run); startBrawl([F, BR, R]); await p; continue;
+    }
+    await speak(st.w, text, run);
+    if(st.sleep) seatEl(st.w).classList.remove("sleepy");
+  }
+  await runVotes(run);
 }
+
+async function runVotes(run){
+  check(run);
+  logLine("(Voting starts.)", "act");
+  document.querySelectorAll("#panel .seat").forEach((s, i) => { s.classList.remove("messy"); face(i, FACE[i]); });
+  const order = [0,1,2,3,4,5].sort(() => Math.random() - .5);
+  for(const i of order){
+    await sleep(rnd(200, 750)); check(run);
+    seatEl(i).classList.add("voted");
+    const line = pick(VOTE_LINES[i]);
+    await speak(i, line, run, {nolog:true, ms: 450 + line.length * 17 + rnd(0, 300)});
+    logLine("<b>" + esc(BIRDS[i].name) + "</b> votes <b>" + BIRDS[i].vote.toUpperCase() + "</b>. " + esc(line), "vote");
+    if(i === P5){ face(P5, !FACE[P5]); }
+  }
+  finishMeeting(run);
+}
+
+function finishMeeting(run){
+  if(run !== meetRun) return;
+  $("#skipMeet").hidden = true;
+  $("#countdown").textContent = "Meeting is over. Pigeons are leaving slowly.";
+  $("#result").textContent = "Result: 5 yes, 0 no, 1 abstain. 1 vote from Hyderabad was rejected (not a member). Akka is dope. Reason is still under fight.";
+  $("#result").classList.add("on");
+  bubble(G, "Motion passed. Akka is good. WHY she is good, we will fight about next year.");
+  gavel();
+  [BR, R].forEach(i => seatEl(i).classList.add("grumble"));
+  face(BR, false); face(R, true);
+  say("Motion passed. Committee has gone for bread. I will print your wish now.");
+  $("#toPrint").hidden = false;
+  later(() => reveal($("#toPrint")), 300);
+}
+
+$("#skipMeet").addEventListener("click", () => {
+  const run = ++meetRun;
+  clearInterval(cdTimer); cdTimer = null; chatTimers.forEach(clearTimeout);
+  stopFights();
+  const u = $("#uncle"); u.classList.remove("in", "out");
+  document.querySelectorAll("#panel .seat").forEach((s, i) => { s.classList.remove("speaking", "messy", "sleepy"); s.classList.add("voted"); face(i, FACE[i]); });
+  face(P5, !FACE[P5]);
+  logLine("(Meeting skipped by Akka. Pigeons are offended. Votes taken anyway.)", "act");
+  BIRDS.forEach((b, i) => logLine("<b>" + esc(b.name) + "</b> votes <b>" + b.vote.toUpperCase() + "</b>.", "vote"));
+  classic("skipmeet", "Skipped an official pigeon meeting. The pigeons saw.");
+  finishMeeting(run);
+});
 function startPrint(){
   $("#soundAsk").hidden = true;
   later(() => focusTop($("#printer")), 30);
@@ -1556,9 +1883,11 @@ function wishLines(){
     "the records.",
     "",
     "But you are also our",
-    "favourite akka. 5 pigeons",
-    "checked this. 4 agreed.",
+    "favourite akka. 6 pigeons",
+    "checked this. 5 agreed.",
     "1 is just gay ig.",
+    "They are still fighting",
+    "about WHY you are awesome.",
     "",
     ...(cbCount ? [
       "Office also recorded " + cbCount,
@@ -1698,15 +2027,14 @@ $("#again").addEventListener("click", () => {
   nameIn.value = ""; $("#nameNote").textContent = ""; $("#nameRow").hidden = false; $("#choices").hidden = true; $("#callB").textContent = NAME;
   document.querySelectorAll("#choices button").forEach(b => b.disabled = false);
   $("#bform").reset(); ["#ageNote","#cbNote","#candleNote"].forEach(s => $(s).textContent = "");
-  seenClassic.clear(); clearInterval(cdTimer); cdTimer = null;
-  $("#countdown").innerHTML = 'Voting starts in <b id="cdNum">10</b> seconds';
+  seenClassic.clear(); clearInterval(cdTimer); cdTimer = null; chatTimers.forEach(clearTimeout); meetRun++;
+  $("#countdown").innerHTML = 'Meeting starts in <b id="cdNum">10</b> seconds';
+  buildMeeting();
   $("#soundAsk").hidden = true; $("#playSong").hidden = true;
   $("#yobNote").textContent = "Officer note: please move the slider.";
   clearSig();
   approveBtn.hidden = false; approveBtn.style.left = ""; approveBtn.style.top = "";
   $("#imprint").classList.remove("show"); $("#stamper").classList.remove("go"); $("#toCommittee").hidden = true;
-  document.querySelectorAll("#panel .seat").forEach(s => s.classList.remove("voted","turned"));
-  document.querySelectorAll("#mins li").forEach(l => l.classList.remove("on"));
   $("#result").classList.remove("on"); $("#toPrint").hidden = true;
   $("#feed").textContent = ""; $("#feed").setAttribute("aria-live","off"); $("#toCert").hidden = true;
   say("Again? Ok. Same answers please. Go take token " + pad(token) + ".");
