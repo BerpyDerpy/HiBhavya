@@ -1199,6 +1199,8 @@ const FROM = "your friends";
 /* ================================== */
 
 const $ = s => document.querySelector(s);
+/* attach a handler only if the element exists, so removing a button from the HTML never breaks the rest */
+function on(sel, ev, fn){ const el = document.querySelector(sel); if(el) el.addEventListener(ev, fn); }
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canHover = matchMedia("(hover: hover)").matches;
 let token = 1;
@@ -1254,7 +1256,7 @@ function setSound(on){
   b.textContent = "Sound: " + (on ? "on" : "off");
   if(on) ding();
 }
-$("#soundBtn").addEventListener("click", () => setSound(!soundOn));
+on("#soundBtn", "click", () => setSound(!soundOn));
 const jingle = () => { for(let i=0;i<7;i++) tone(2200 + Math.random()*2200, .08 + Math.random()*.12, i%2 ? "triangle" : "sine", .035, Math.random()*.3); };
 
 /* start gate */
@@ -1266,8 +1268,8 @@ function openOffice(withSound){
   document.body.classList.add("lights");
   setTimeout(() => $("#takeToken").focus({preventScroll:true}), 500);
 }
-$("#gateOn").addEventListener("click", () => openOffice(true));
-$("#gateOff").addEventListener("click", () => {
+on("#gateOn", "click", () => openOffice(true));
+on("#gateOff", "click", () => {
   openOffice(false);
   const b = $("#soundBtn"); b.classList.remove("nudge"); void b.offsetWidth; b.classList.add("nudge");
 });
@@ -1286,7 +1288,7 @@ function classic(key, why){
   clearTimeout(cbTimer);
   cbTimer = setTimeout(() => t.classList.remove("on"), 4200);
 }
-$("#classic").addEventListener("click", e => e.currentTarget.classList.remove("on"));
+on("#classic", "click", e => e.currentTarget.classList.remove("on"));
 
 /* ---------- clerk talking ---------- */
 const clerk = $("#clerk"), bubbleText = $("#bubbleText");
@@ -1344,7 +1346,7 @@ const pad = n => String(n).padStart(3, "0");
 
 /* 1. token */
 let tokenTaken = false;
-$("#takeToken").addEventListener("click", () => {
+on("#takeToken", "click", () => {
   if(tokenTaken){
     $("#machineScreen").textContent = "ONLY ONE TOKEN PER BIRTHDAY. PLEASE GO TO WINDOW 3.";
     buzz(); classic("token", "Pressed the button again right after reading the sign.");
@@ -1358,7 +1360,7 @@ $("#takeToken").addEventListener("click", () => {
   for(let i=0;i<9;i++) noise(.05,.05,2600,i*.12);
   setTimeout(() => { $("#goWindow").hidden = false; reveal($("#goWindow")); }, reduce ? 0 : 1100);
 });
-$("#goWindow").addEventListener("click", () => {
+on("#goWindow", "click", () => {
   $("#ledLive").textContent = pad(token);
   const led = $("#led"); led.classList.remove("blink"); void led.offsetWidth; led.classList.add("blink");
   ding();
@@ -1382,7 +1384,7 @@ nameIn.addEventListener("input", () => {
     $("#nameNote").textContent = "That is enough letters. Ink is costly.";
   }
 });
-$("#giveName").addEventListener("click", () => {
+on("#giveName", "click", () => {
   if(nameIn.value !== NAME){ say("Full name please. All " + NAME.length + " letters."); nameIn.focus(); return; }
   $("#nameRow").hidden = true;
   say(NAME + ". Ok. Checking the records...");
@@ -1398,7 +1400,7 @@ const aliasLines = {
   "Aunty": "Aunty. Correct. Even the kids in her building say this.",
   "Dadi Amma": "Dadi Amma. Very correct. Very respectful."
 };
-$("#callB").addEventListener("click", () => {
+on("#callB", "click", () => {
   bTries++;
   say(bTries === 1 ? "Not in records. Records only have Akka, Aunty and Dadi Amma."
                    : "Still not in records. Please pick from Akka, Aunty and Dadi Amma.");
@@ -1432,7 +1434,7 @@ document.querySelectorAll("[data-age]").forEach(cb => {
     buzz();
   });
 });
-$("#yob").addEventListener("input", e => {
+on("#yob", "input", e => {
   const v = +e.target.value;
   let t;
   if(v < 15) t = "Dinosaur times. Plausible.";
@@ -1459,7 +1461,7 @@ document.querySelectorAll("[data-cb]").forEach(cb => {
     buzz();
   });
 });
-$("#candles").addEventListener("input", e => {
+on("#candles", "input", e => {
   const v = parseInt(e.target.value, 10);
   let t = "";
   if(isNaN(v)) t = "";
@@ -1494,8 +1496,8 @@ cv.addEventListener("pointermove", e => {
 });
 ["pointerup","pointercancel","pointerleave"].forEach(ev => cv.addEventListener(ev, () => drawing = false));
 function clearSig(){ sx.clearRect(0,0,cv.width,cv.height); signed = false; }
-$("#sigClear").addEventListener("click", clearSig);
-$("#sigSkip").addEventListener("click", () => {
+on("#sigClear", "click", clearSig);
+on("#sigSkip", "click", () => {
   sizeSig(); clearSig();
   signed = true;
   const draw = () => {
@@ -1509,7 +1511,7 @@ $("#sigSkip").addEventListener("click", () => {
   classic("sign", "Asked a cake to sign her own birthday form.");
 });
 
-$("#bform").addEventListener("submit", e => {
+on("#bform", "submit", e => {
   e.preventDefault();
   if(!signed){
     const w = $("#sigWrap"); w.classList.remove("want"); void w.offsetWidth; w.classList.add("want");
@@ -1559,7 +1561,7 @@ approveBtn.addEventListener("click", () => {
     reveal($("#toCommittee"));
   }, reduce ? 0 : 1500);
 });
-$("#toCommittee").addEventListener("click", () => {
+on("#toCommittee", "click", () => {
   say("Committee is sitting down. Meeting starts in 10 seconds. Please don't disturb the pigeons.");
   show("committee");
   later(() => focusTop($(".hall")), 50);
@@ -1836,7 +1838,7 @@ function finishMeeting(run){
   later(() => reveal($("#toPrint")), 300);
 }
 
-$("#skipMeet").addEventListener("click", () => {
+on("#skipMeet", "click", () => {
   const run = ++meetRun;
   clearInterval(cdTimer); cdTimer = null; chatTimers.forEach(clearTimeout);
   stopFights();
@@ -1854,7 +1856,7 @@ function startPrint(){
   say("Printing. This printer is also from your time, so please be patient.");
   setTimeout(printWish, reduce ? 0 : 700);
 }
-$("#toPrint").addEventListener("click", () => {
+on("#toPrint", "click", () => {
   show("print");
   if(soundOn){ startPrint(); return; }
   $("#soundAsk").hidden = false;
@@ -1862,9 +1864,9 @@ $("#toPrint").addEventListener("click", () => {
   say("Wait. Your sound is off. The printer sings at the end. Switch it on?");
   const b = $("#soundBtn"); b.classList.remove("nudge"); void b.offsetWidth; b.classList.add("nudge");
 });
-$("#askOn").addEventListener("click", () => { setSound(true); startPrint(); });
-$("#askOff").addEventListener("click", startPrint);
-$("#playSong").addEventListener("click", () => { if(!soundOn) setSound(true); melody(); });
+on("#askOn", "click", () => { setSound(true); startPrint(); });
+on("#askOff", "click", startPrint);
+on("#playSong", "click", () => { if(!soundOn) setSound(true); melody(); });
 
 /* 6. print */
 function wishLines(){
@@ -1942,7 +1944,7 @@ function donePrint(){
   $("#playSong").hidden = false;
   later(() => reveal($("#toCert")), 200);
 }
-$("#toCert").addEventListener("click", () => {
+on("#toCert", "click", () => {
   $("#issued").textContent = new Date().toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"});
   $("#cbCert").textContent = cbCount ? cbCount : "0 (very suspicious)";
   say("Here is your certificate. Please do not laminate it. Lamination is a different window.");
@@ -1996,7 +1998,7 @@ sets.forEach((set, i) => {
   });
   $("#stand").appendChild(rod);
 });
-$("#toBangles").addEventListener("click", () => {
+on("#toBangles", "click", () => {
   say("One more thing. Your friends sent this. They said sorry in advance.");
   show("bangles");
   later(() => focusTop($('[data-scene="bangles"]')), 50);
@@ -2004,11 +2006,11 @@ $("#toBangles").addEventListener("click", () => {
 });
 
 /* childhood photo */
-$("#photoBtn").addEventListener("click", () => {
+on("#photoBtn", "click", () => {
   $("#lbImg").src = $("#kidImg").src;
   $("#lightbox").hidden = false;
 });
-$("#lightbox").addEventListener("click", () => { $("#lightbox").hidden = true; });
+on("#lightbox", "click", () => { $("#lightbox").hidden = true; });
 addEventListener("keydown", e => { if(e.key === "Escape") $("#lightbox").hidden = true; });
 
 /* poking the clerk */
@@ -2019,7 +2021,7 @@ clerk.addEventListener("click", () => {
 });
 
 /* 7. again */
-$("#again").addEventListener("click", () => {
+on("#again", "click", () => {
   token++;
   tokenTaken = false; corrected = false; bTries = 0; dodges = 0; stamped = false; printing = false;
   $("#slip").hidden = true; $("#goWindow").hidden = true;
